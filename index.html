@@ -3,29 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Log Master - Soluções em Logística</title>
+  <title>Log Master - Excelência em Logística Sensível</title>
   
-  <!-- Tailwind CSS via CDN -->
+  <!-- Fontes Premium: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- AOS Animation CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Configuração do Tailwind -->
+  <!-- Configuração do Tailwind Refinada -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
           colors: {
-            blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' },
-            red: { 50: '#fef2f2', 100: '#fee2e2', 500: '#ef4444', 600: '#dc2626' },
-            slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' }
+            brand: {
+              50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e',
+              accent: '#f43f5e' // Rose/Red vibrante para CTAs
+            },
+            dark: '#0f172a'
+          },
+          boxShadow: {
+            'glow': '0 0 20px rgba(14, 165, 233, 0.5)',
+            'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
           },
           animation: {
-            'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'blob': 'blob 7s infinite',
           },
           keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
             }
           }
         }
@@ -33,328 +51,432 @@
     }
   </script>
 
-  <!-- Lucide Icons via CDN -->
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Estilos para o Roteador SPA Customizado */
-    .page-section { display: none; }
-    .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+    /* Estilos do SPA e Customizações Globais */
+    html { scroll-behavior: smooth; }
+    body { background-color: #f8fafc; overflow-x: hidden; }
     
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .page-section { display: none; opacity: 0; transition: opacity 0.5s ease; }
+    .page-section.active { display: block; opacity: 1; animation: fadeRoute 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    
+    @keyframes fadeRoute {
+      0% { opacity: 0; transform: translateY(15px) scale(0.99); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Utilitário para Animação de Scroll */
-    .scroll-animate { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-    .scroll-animate.is-visible { opacity: 1; transform: translateY(0); }
-    
-    html { scroll-behavior: smooth; }
-    body { font-family: system-ui, -apple-system, sans-serif; }
+    /* Efeito Glassmorphism Avançado */
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Ocultar barra de rolagem mas manter funcionalidade */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 selection:bg-blue-500 selection:text-white flex flex-col min-h-screen">
+<body class="text-slate-800 selection:bg-brand-500 selection:text-white flex flex-col min-h-screen">
 
-  <!-- NAVBAR -->
-  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white py-4">
+  <!-- NAVBAR PREMIUM -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-500 py-5 bg-transparent">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center">
-        <button onclick="navigate('home')" class="flex items-center gap-2 focus:outline-none rounded-md group">
-          <i data-lucide="shield-check" class="h-8 w-8 text-blue-700 group-hover:scale-110 transition-transform"></i>
-          <span class="font-bold text-2xl text-slate-800 tracking-tight">Log<span class="text-blue-700">Master</span></span>
+      <div class="flex justify-between items-center bg-white/70 backdrop-blur-xl shadow-glass border border-white/40 rounded-2xl px-6 py-3 transition-all">
+        <!-- Logo -->
+        <button onclick="navigate('home')" class="flex items-center gap-2 focus:outline-none group">
+          <div class="p-2 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl shadow-glow group-hover:scale-105 transition-all duration-300">
+            <i data-lucide="shield-check" class="h-6 w-6 text-white"></i>
+          </div>
+          <span class="font-extrabold text-2xl tracking-tight text-dark">Log<span class="text-brand-600">Master</span></span>
         </button>
 
         <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-1 lg:space-x-2" id="desktop-nav">
-          <button onclick="navigate('home')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="home">Home</button>
-          <button onclick="navigate('empresa')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="empresa">A Empresa</button>
-          <button onclick="navigate('servicos')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="servicos">Serviços</button>
-          <button onclick="navigate('transporte')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="transporte">Transporte</button>
-          <button onclick="navigate('certificacoes')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="certificacoes">Certificações</button>
-          <button onclick="navigate('carreiras')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="carreiras">Trabalhe Conosco</button>
-          <button onclick="navigate('contato')" class="nav-link px-3 py-2 rounded-md text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-blue-700" data-target="contato">Contato</button>
+        <nav class="hidden lg:flex items-center space-x-1" id="desktop-nav">
+          <button onclick="navigate('home')" class="nav-link relative px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors group" data-target="home">
+            Home
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full"></span>
+          </button>
+          <button onclick="navigate('empresa')" class="nav-link relative px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors group" data-target="empresa">
+            A Empresa
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full"></span>
+          </button>
+          <button onclick="navigate('servicos')" class="nav-link relative px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors group" data-target="servicos">
+            Serviços
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full"></span>
+          </button>
+          <button onclick="navigate('transporte')" class="nav-link relative px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors group" data-target="transporte">
+            Frota
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full"></span>
+          </button>
+          <button onclick="navigate('certificacoes')" class="nav-link relative px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors group" data-target="certificacoes">
+            Certificações
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-brand-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full"></span>
+          </button>
+          <button onclick="navigate('carreiras')" class="nav-link relative px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors group" data-target="carreiras">Trabalhe Conosco</button>
+          <div class="pl-4 ml-2 border-l border-slate-200">
+            <button onclick="navigate('contato')" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-dark hover:bg-slate-800 shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5">
+              Cotação
+            </button>
+          </div>
         </nav>
 
         <!-- Mobile Menu Button -->
-        <div class="md:hidden flex items-center">
-          <button onclick="toggleMobileMenu()" class="text-slate-800 hover:text-blue-700 focus:outline-none p-2">
-            <i data-lucide="menu" id="menu-icon" class="h-6 w-6"></i>
-          </button>
-        </div>
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-800 bg-slate-100 hover:bg-slate-200 focus:outline-none transition-colors">
+          <i data-lucide="menu" id="menu-icon" class="h-5 w-5"></i>
+        </button>
       </div>
     </div>
 
     <!-- Mobile Nav -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full">
-      <div class="px-4 py-4 space-y-2">
-        <button onclick="navigate('home')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="home">Home</button>
-        <button onclick="navigate('empresa')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="empresa">A Empresa</button>
-        <button onclick="navigate('servicos')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="servicos">Serviços</button>
-        <button onclick="navigate('transporte')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="transporte">Transporte</button>
-        <button onclick="navigate('certificacoes')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="certificacoes">Certificações</button>
-        <button onclick="navigate('carreiras')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="carreiras">Trabalhe Conosco</button>
-        <button onclick="navigate('contato')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50" data-target="contato">Contato</button>
+    <div id="mobile-menu" class="hidden lg:hidden absolute w-full px-4 mt-2">
+      <div class="bg-white/95 backdrop-blur-xl border border-slate-100 shadow-2xl rounded-2xl p-4 space-y-1">
+        <button onclick="navigate('home')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-600" data-target="home">Home</button>
+        <button onclick="navigate('empresa')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-600" data-target="empresa">A Empresa</button>
+        <button onclick="navigate('servicos')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-600" data-target="servicos">Serviços</button>
+        <button onclick="navigate('transporte')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-600" data-target="transporte">Frota</button>
+        <button onclick="navigate('certificacoes')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-600" data-target="certificacoes">Certificações</button>
+        <button onclick="navigate('carreiras')" class="mobile-nav-link block w-full text-left px-4 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-600" data-target="carreiras">Trabalhe Conosco</button>
+        <div class="pt-2 mt-2 border-t border-slate-100">
+          <button onclick="navigate('contato')" class="block w-full text-center px-4 py-3 rounded-xl text-base font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-lg">Falar com Consultor</button>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-grow pt-20">
+  <main class="flex-grow pt-28">
     
     <!-- PÁGINA: HOME -->
     <div id="page-home" class="page-section active">
-      <section class="relative bg-slate-50 overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40">
-        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
-          <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow"></div>
-          <div class="absolute top-48 -left-24 w-72 h-72 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow" style="animation-delay: 1.5s;"></div>
+      
+      <!-- Hero Section -->
+      <section class="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
+        <!-- Elementos de Fundo Abstratos (Mesh Gradient simulação) -->
+        <div class="absolute inset-0 z-0">
+          <div class="absolute top-0 -left-4 w-72 h-72 bg-brand-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-blob"></div>
+          <div class="absolute top-0 -right-4 w-72 h-72 bg-brand-accent rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob animation-delay-2000"></div>
+          <div class="absolute -bottom-8 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob animation-delay-4000"></div>
         </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto animate-fade-in-up">
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-6 shadow-sm">
-            <i data-lucide="activity" class="w-4 h-4"></i> Operação Nacional a partir de MG
-          </span>
-          <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold text-slate-800 tracking-tight mb-8">
-            Logística Segura para <br class="hidden md:block" />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-400">Materiais Sensíveis</span>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div data-aos="fade-down" data-aos-duration="1000">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-brand-600 text-xs font-bold tracking-widest uppercase mb-8 shadow-sm">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-600"></span>
+              </span>
+              Operação Nacional a partir de MG
+            </span>
+          </div>
+
+          <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-dark tracking-tight mb-6" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="100">
+            Logística Segura para<br/>
+            <!-- Typed.js será injetado aqui -->
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-cyan-400" id="typed-text"></span>
           </h1>
-          <p class="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-            Especialistas em transporte logístico certificado, com rigoroso controle de temperatura e rastreabilidade ponta a ponta para o setor da saúde.
+          
+          <p class="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto font-medium" data-aos="fade-up" data-aos-delay="200">
+            Transporte logístico certificado, controle de temperatura milimétrico e rastreabilidade ponta a ponta para o setor da saúde. A vida não espera.
           </p>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onclick="navigate('contato')" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-xl text-white bg-red-500 hover:bg-red-600 transition-all shadow-lg hover:shadow-red-500/30">
-              Fale com um Especialista <i data-lucide="chevron-right" class="ml-2 w-5 h-5"></i>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-aos="fade-up" data-aos-delay="300">
+            <button onclick="navigate('contato')" class="group w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-2xl text-white bg-brand-accent hover:bg-rose-600 transition-all shadow-lg shadow-brand-accent/30 hover:shadow-brand-accent/50 hover:-translate-y-1">
+              Fale com um Especialista 
+              <i data-lucide="arrow-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
             </button>
-            <button onclick="navigate('servicos')" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-xl text-blue-700 bg-white border border-blue-200 hover:bg-blue-50 transition-all shadow-sm">
-              Conheça Nossos Serviços
+            <button onclick="navigate('servicos')" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-2xl text-dark bg-white border border-slate-200 hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm hover:shadow-md hover:-translate-y-1">
+              Explorar Serviços
             </button>
           </div>
         </div>
       </section>
 
-      <section class="py-20 bg-white">
+      <!-- Differentials Section -->
+      <section class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16 scroll-animate">
-            <h2 class="text-3xl font-bold text-slate-800 mb-4">Nossos Diferenciais</h2>
-            <div class="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
+          <div class="text-center mb-20" data-aos="fade-up">
+            <h2 class="text-brand-600 font-bold tracking-wide uppercase text-sm mb-2">Por que a Log Master?</h2>
+            <h3 class="text-4xl font-extrabold text-dark">Engenharia de Risco Aplicada</h3>
           </div>
+
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Cards -->
-            <div class="bg-slate-50 p-8 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group scroll-animate">
-              <i data-lucide="shield-check" class="w-12 h-12 text-blue-500 mb-6 group-hover:scale-110 transition-transform"></i>
-              <h3 class="text-xl font-bold text-slate-800 mb-3">Segurança Total</h3>
-              <p class="text-slate-600 text-sm leading-relaxed">Protocolos rígidos e gerenciamento de risco em todas as etapas.</p>
+            <!-- Card 1 -->
+            <div data-aos="fade-up" data-aos-delay="0" class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-200 transition-all duration-300 group hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(14,165,233,0.15)] relative overflow-hidden">
+              <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity"><i data-lucide="shield-check" class="w-32 h-32 text-brand-600"></i></div>
+              <div class="w-14 h-14 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-6 relative z-10 group-hover:bg-brand-600 transition-colors">
+                <i data-lucide="shield-check" class="w-7 h-7 text-brand-600 group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 class="text-xl font-bold text-dark mb-3 relative z-10">Segurança Total</h3>
+              <p class="text-slate-600 text-sm leading-relaxed relative z-10">Gerenciamento de risco rígido, com escolta e monitoramento via satélite 24/7.</p>
             </div>
-            <div class="bg-slate-50 p-8 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group scroll-animate" style="transition-delay: 100ms;">
-              <i data-lucide="thermometer-snowflake" class="w-12 h-12 text-blue-500 mb-6 group-hover:scale-110 transition-transform"></i>
-              <h3 class="text-xl font-bold text-slate-800 mb-3">Controle Térmico</h3>
-              <p class="text-slate-600 text-sm leading-relaxed">Especialistas em cadeia fria, garantindo integridade biológica.</p>
+            <!-- Card 2 -->
+            <div data-aos="fade-up" data-aos-delay="100" class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-200 transition-all duration-300 group hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(14,165,233,0.15)] relative overflow-hidden">
+               <div class="w-14 h-14 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-6 relative z-10 group-hover:bg-brand-600 transition-colors">
+                <i data-lucide="thermometer-snowflake" class="w-7 h-7 text-brand-600 group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 class="text-xl font-bold text-dark mb-3 relative z-10">Cadeia Fria</h3>
+              <p class="text-slate-600 text-sm leading-relaxed relative z-10">Data loggers calibrados e caixas validadas. A temperatura não oscila, não importa a distância.</p>
             </div>
-            <div class="bg-slate-50 p-8 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group scroll-animate" style="transition-delay: 200ms;">
-              <i data-lucide="clock" class="w-12 h-12 text-blue-500 mb-6 group-hover:scale-110 transition-transform"></i>
-              <h3 class="text-xl font-bold text-slate-800 mb-3">Agilidade Extrema</h3>
-              <p class="text-slate-600 text-sm leading-relaxed">Serviços extraordinários com SLA rigoroso para tempos críticos.</p>
+            <!-- Card 3 -->
+            <div data-aos="fade-up" data-aos-delay="200" class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-200 transition-all duration-300 group hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(14,165,233,0.15)] relative overflow-hidden">
+               <div class="w-14 h-14 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-6 relative z-10 group-hover:bg-brand-600 transition-colors">
+                <i data-lucide="zap" class="w-7 h-7 text-brand-600 group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 class="text-xl font-bold text-dark mb-3 relative z-10">SLA Agressivo</h3>
+              <p class="text-slate-600 text-sm leading-relaxed relative z-10">Operações extraordinárias (AOG) com coleta imediata para cenários de risco de vida.</p>
             </div>
-            <div class="bg-slate-50 p-8 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group scroll-animate" style="transition-delay: 300ms;">
-              <i data-lucide="file-check-2" class="w-12 h-12 text-blue-500 mb-6 group-hover:scale-110 transition-transform"></i>
-              <h3 class="text-xl font-bold text-slate-800 mb-3">Certificações</h3>
-              <p class="text-slate-600 text-sm leading-relaxed">Licenças ativas na ANTT, ANVISA, IBAMA e Polícia Federal.</p>
+            <!-- Card 4 -->
+            <div data-aos="fade-up" data-aos-delay="300" class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-200 transition-all duration-300 group hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(14,165,233,0.15)] relative overflow-hidden">
+               <div class="w-14 h-14 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-6 relative z-10 group-hover:bg-brand-600 transition-colors">
+                <i data-lucide="award" class="w-7 h-7 text-brand-600 group-hover:text-white transition-colors"></i>
+              </div>
+              <h3 class="text-xl font-bold text-dark mb-3 relative z-10">Conformidade</h3>
+              <p class="text-slate-600 text-sm leading-relaxed relative z-10">Todas as licenças ativas (ANVISA, Polícia Federal, IBAMA) auditadas rigorosamente.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="py-24 bg-slate-900 text-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
-          <div class="space-y-8 scroll-animate">
-            <h2 class="text-3xl md:text-4xl font-bold">Frota 100% Rastreável e <span class="text-blue-400">Climatizada</span>.</h2>
-            <p class="text-slate-300 text-lg leading-relaxed">
-              Monitoramento 24h via satélite, sensores de temperatura em tempo real e equipe com treinamento MOPP para cargas perigosas.
+      <!-- Fleet Teaser Section (Dark Mode) -->
+      <section class="py-24 bg-dark text-white overflow-hidden relative">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          <div class="space-y-8" data-aos="fade-right">
+            <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">Um cofre blindado,<br/> <span class="text-brand-500">sobre rodas.</span></h2>
+            <p class="text-slate-400 text-lg leading-relaxed font-light">
+              Nossa frota dedicada possui baús termicamente isolados, fechaduras eletromecânicas e sistema de telemetria preditiva. A carga do seu paciente nunca esteve tão segura.
             </p>
-            <button onclick="navigate('transporte')" class="inline-flex items-center text-blue-400 hover:text-blue-300 font-semibold text-lg">
-              Ver detalhes da frota <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+            <button onclick="navigate('transporte')" class="inline-flex items-center justify-center px-6 py-3 border border-brand-500 text-brand-400 hover:bg-brand-500 hover:text-white rounded-xl transition-all font-semibold group">
+              Conhecer a Frota <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
             </button>
           </div>
-          <div class="relative scroll-animate" style="transition-delay: 200ms;">
-            <div class="absolute inset-0 bg-blue-600 rounded-3xl blur-2xl opacity-20 animate-pulse-slow"></div>
-            <img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&q=80&w=1000" alt="Caminhão logístico" class="relative z-10 rounded-3xl shadow-2xl border border-slate-700 w-full object-cover h-80" />
+          <div class="relative" data-aos="fade-left">
+            <div class="absolute -inset-4 bg-gradient-to-r from-brand-600 to-purple-600 rounded-3xl blur-2xl opacity-30 animate-pulse"></div>
+            <img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&q=80&w=1000" alt="Caminhão logístico" class="relative z-10 rounded-2xl shadow-2xl border border-slate-700/50 w-full object-cover h-96 grayscale hover:grayscale-0 transition-all duration-700" />
+            <!-- Floating badge -->
+            <div class="absolute -bottom-6 -left-6 bg-white text-dark p-4 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 z-20" data-aos="fade-up" data-aos-delay="400">
+              <div class="bg-green-100 p-2 rounded-full"><i data-lucide="satellite" class="text-green-600 h-6 w-6"></i></div>
+              <div>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Status da Frota</p>
+                <p class="font-extrabold text-sm">Rastreamento Ativo</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </div>
 
     <!-- PÁGINA: EMPRESA -->
-    <div id="page-empresa" class="page-section">
-      <div class="pt-24 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <h1 class="text-4xl font-bold text-slate-800 mb-4">Sobre a Log Master</h1>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Uma trajetória construída com responsabilidade, inovação e compromisso inegociável com a vida.</p>
+    <div id="page-empresa" class="page-section pt-10 pb-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-20" data-aos="fade-up">
+          <span class="text-brand-600 font-bold tracking-widest uppercase text-sm">Nosso DNA</span>
+          <h1 class="text-4xl md:text-5xl font-extrabold text-dark mt-2 mb-6">Sobre a Log Master</h1>
+          <p class="text-xl text-slate-600 max-w-3xl mx-auto font-light">Uma trajetória construída com responsabilidade, inovação e um compromisso inegociável com a vida humana.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8 mb-20">
+          <div data-aos="fade-up" data-aos-delay="0" class="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center hover:shadow-xl transition-shadow">
+            <div class="w-16 h-16 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><i data-lucide="target" class="w-8 h-8"></i></div>
+            <h3 class="text-2xl font-bold text-dark mb-4">Missão</h3>
+            <p class="text-slate-600 leading-relaxed">Prover soluções logísticas excepcionais para materiais sensíveis, garantindo a integridade dos produtos e a superação das expectativas.</p>
           </div>
-          <div class="grid md:grid-cols-3 gap-8 mb-20">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
-              <i data-lucide="target" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
-              <h3 class="text-2xl font-bold text-slate-800 mb-3">Missão</h3>
-              <p class="text-slate-600">Prover soluções logísticas excepcionais para materiais sensíveis, garantindo a integridade dos produtos e a satisfação total dos clientes.</p>
-            </div>
-            <div class="bg-blue-600 p-8 rounded-2xl shadow-lg text-center text-white transform md:-translate-y-4">
-              <i data-lucide="eye" class="w-12 h-12 text-blue-200 mx-auto mb-4"></i>
-              <h3 class="text-2xl font-bold mb-3">Visão</h3>
-              <p class="text-blue-100">Ser a principal referência nacional no transporte de cargas biológicas e de alto valor, reconhecida pela excelência, tecnologia e segurança.</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
-              <i data-lucide="heart" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
-              <h3 class="text-2xl font-bold text-slate-800 mb-3">Valores</h3>
-              <p class="text-slate-600">Ética, Transparência, Foco no Cliente, Valorização da Vida, Sustentabilidade e Melhoria Contínua em nossos processos e certificações.</p>
-            </div>
+          <div data-aos="fade-up" data-aos-delay="100" class="bg-gradient-to-br from-brand-600 to-brand-900 p-10 rounded-3xl shadow-xl shadow-brand-500/20 text-center text-white transform md:-translate-y-4">
+            <div class="w-16 h-16 bg-white/10 text-white rounded-2xl flex items-center justify-center mx-auto mb-6"><i data-lucide="eye" class="w-8 h-8"></i></div>
+            <h3 class="text-2xl font-bold mb-4">Visão</h3>
+            <p class="text-brand-100 leading-relaxed">Ser a principal referência e padrão-ouro nacional no transporte de cargas biológicas e fármacos de alto valor.</p>
+          </div>
+          <div data-aos="fade-up" data-aos-delay="200" class="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center hover:shadow-xl transition-shadow">
+            <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mx-auto mb-6"><i data-lucide="heart" class="w-8 h-8"></i></div>
+            <h3 class="text-2xl font-bold text-dark mb-4">Valores</h3>
+            <p class="text-slate-600 leading-relaxed">Ética inabalável, Foco no Cliente, Valorização da Vida, Sustentabilidade e busca incessante pela Melhoria Contínua.</p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- PÁGINA: SERVIÇOS -->
-    <div id="page-servicos" class="page-section bg-slate-50 min-h-screen">
-      <div class="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-bold text-slate-800 mb-12 text-center">Nossos Serviços</h1>
+    <div id="page-servicos" class="page-section pt-10 pb-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h1 class="text-4xl md:text-5xl font-extrabold text-dark mb-4">Soluções Customizadas</h1>
+          <p class="text-slate-600 text-lg">Desenhamos a logística de acordo com a criticidade da sua carga.</p>
+        </div>
+        
         <div class="grid lg:grid-cols-2 gap-10">
-          <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-200">
-            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
-              <i data-lucide="thermometer-snowflake" class="w-8 h-8 text-blue-700"></i>
+          <div data-aos="fade-right" class="bg-white p-12 rounded-[2.5rem] shadow-sm border border-slate-100 hover:border-brand-200 transition-all group relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-50 rounded-full group-hover:scale-150 transition-transform duration-700 ease-out z-0"></div>
+            <div class="relative z-10">
+              <div class="w-16 h-16 bg-white border border-slate-100 shadow-sm rounded-2xl flex items-center justify-center mb-8">
+                <i data-lucide="microscope" class="w-8 h-8 text-brand-600"></i>
+              </div>
+              <h2 class="text-3xl font-bold text-dark mb-4">Saúde e Biológico</h2>
+              <p class="text-slate-600 mb-8 leading-relaxed text-lg">Transporte qualificado de amostras biológicas (UN3373), hemoderivados e medicamentos termolábeis com controle rigoroso de temperatura.</p>
+              <ul class="space-y-4">
+                 <li class="flex items-center gap-4 text-slate-700 font-medium"><div class="p-1 bg-green-100 rounded-full"><i data-lucide="check" class="w-4 h-4 text-green-600"></i></div> Embalagens validadas</li>
+                 <li class="flex items-center gap-4 text-slate-700 font-medium"><div class="p-1 bg-green-100 rounded-full"><i data-lucide="check" class="w-4 h-4 text-green-600"></i></div> Controle de Cadeia Fria (2°C a 8°C / -20°C)</li>
+                 <li class="flex items-center gap-4 text-slate-700 font-medium"><div class="p-1 bg-green-100 rounded-full"><i data-lucide="check" class="w-4 h-4 text-green-600"></i></div> Monitoramento Data Logger</li>
+              </ul>
             </div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-4">Transporte de Material Biológico</h2>
-            <p class="text-slate-600 mb-6 leading-relaxed">Transporte qualificado de amostras biológicas (Categoria B), sangue, hemoderivados e medicamentos termolábeis. Controle absoluto de temperatura e monitoramento ativo.</p>
-            <ul class="space-y-3 text-slate-700">
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Embalagens validadas (Caixas térmicas)</li>
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Gelo seco e Gelo reciclável</li>
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Monitoramento Data Logger</li>
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Equipe treinada NR e ANVISA</li>
-            </ul>
           </div>
-          <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-200">
-            <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mb-6">
-              <i data-lucide="clock" class="w-8 h-8 text-red-600"></i>
+          
+          <div data-aos="fade-left" class="bg-dark p-12 rounded-[2.5rem] shadow-xl text-white group relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-slate-800 rounded-full group-hover:scale-150 transition-transform duration-700 ease-out z-0"></div>
+            <div class="relative z-10">
+              <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-8">
+                <i data-lucide="siren" class="w-8 h-8 text-brand-accent"></i>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-4">Cargas Críticas (AOG)</h2>
+              <p class="text-slate-400 mb-8 leading-relaxed text-lg">Demandas urgentes que não podem esperar. Transporte dedicado, porta a porta, com prazos críticos (SLA de horas).</p>
+              <ul class="space-y-4 border-t border-slate-700 pt-8 mt-auto">
+                 <li class="flex items-center gap-4 text-slate-200 font-medium"><div class="p-1 bg-brand-accent/20 rounded-full"><i data-lucide="clock" class="w-4 h-4 text-brand-accent"></i></div> Disponibilidade 24/7/365</li>
+                 <li class="flex items-center gap-4 text-slate-200 font-medium"><div class="p-1 bg-brand-accent/20 rounded-full"><i data-lucide="truck" class="w-4 h-4 text-brand-accent"></i></div> Veículos Dedicados Imediatos</li>
+                 <li class="flex items-center gap-4 text-slate-200 font-medium"><div class="p-1 bg-brand-accent/20 rounded-full"><i data-lucide="smartphone" class="w-4 h-4 text-brand-accent"></i></div> Atualizações em tempo real</li>
+              </ul>
             </div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-4">Logística Extraordinária (AOG / VUC)</h2>
-            <p class="text-slate-600 mb-6 leading-relaxed">Demandas urgentes que não podem esperar. Oferecemos transporte dedicado, porta a porta, com prazos críticos (SLA de horas) para insumos hospitalares e farmacêuticos.</p>
-            <ul class="space-y-3 text-slate-700">
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Disponibilidade 24/7/365</li>
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Veículos Dedicados (Fiorino, Vans, VUC)</li>
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Rotas Inteligentes e Desvios</li>
-               <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i> Status em tempo real para o cliente</li>
-            </ul>
           </div>
         </div>
       </div>
     </div>
 
     <!-- PÁGINA: TRANSPORTE -->
-    <div id="page-transporte" class="page-section">
-      <div class="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-bold text-slate-800 mb-4 text-center">Transporte & Frota</h1>
-        <p class="text-center text-slate-600 mb-16 max-w-2xl mx-auto">Nossos veículos são verdadeiros cofres em movimento, equipados com tecnologia de ponta para garantir a segurança da carga e do motorista.</p>
+    <div id="page-transporte" class="page-section pt-10 pb-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h1 class="text-4xl md:text-5xl font-extrabold text-dark mb-4">Nossa Frota</h1>
+          <p class="text-slate-600 text-lg max-w-2xl mx-auto">Equipamentos de última geração garantindo segurança e integridade.</p>
+        </div>
+        
         <div class="grid md:grid-cols-3 gap-8">
-          <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-             <i data-lucide="truck" class="w-10 h-10 text-blue-600 mb-4"></i>
-             <h3 class="text-xl font-bold text-slate-800 mb-2">Veículos Novos</h3>
-             <p class="text-slate-600">Renovação constante da frota (vans, VUCs, caminhões baú) garantindo menor índice de manutenção e maior confiabilidade.</p>
+          <div data-aos="zoom-in" data-aos-delay="0" class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
+             <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6"><i data-lucide="truck" class="w-10 h-10 text-brand-600"></i></div>
+             <h3 class="text-xl font-bold text-dark mb-3">Renovação Contínua</h3>
+             <p class="text-slate-600 text-sm">Vans, VUCs e Caminhões Baú com idade média inferior a 3 anos. Menos manutenção, mais pontualidade.</p>
           </div>
-          <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-             <i data-lucide="eye" class="w-10 h-10 text-blue-600 mb-4"></i>
-             <h3 class="text-xl font-bold text-slate-800 mb-2">Rastreamento Satelital</h3>
-             <p class="text-slate-600">Telemetria avançada, bloqueio remoto, sensores de porta e pânico. Acompanhamento pela nossa torre de controle 24h.</p>
+          <div data-aos="zoom-in" data-aos-delay="100" class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
+             <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6"><i data-lucide="cpu" class="w-10 h-10 text-brand-600"></i></div>
+             <h3 class="text-xl font-bold text-dark mb-3">Tecnologia Embarcada</h3>
+             <p class="text-slate-600 text-sm">Telemetria, bloqueio remoto, trava quinta-roda e sensores de porta interligados à central.</p>
           </div>
-          <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
-             <i data-lucide="thermometer-snowflake" class="w-10 h-10 text-blue-600 mb-4"></i>
-             <h3 class="text-xl font-bold text-slate-800 mb-2">Baús Climatizados</h3>
-             <p class="text-slate-600">Isolamento térmico de alta densidade com aparelhos de refrigeração redundantes para cargas frias.</p>
+          <div data-aos="zoom-in" data-aos-delay="200" class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
+             <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6"><i data-lucide="thermometer-snowflake" class="w-10 h-10 text-brand-600"></i></div>
+             <h3 class="text-xl font-bold text-dark mb-3">Climatização Redundante</h3>
+             <p class="text-slate-600 text-sm">Equipamentos de refrigeração independentes e isolamento térmico de alta densidade aprovado.</p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- PÁGINA: CERTIFICAÇÕES -->
-    <div id="page-certificacoes" class="page-section bg-slate-900 min-h-screen text-white">
-      <div class="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-bold text-white mb-4 text-center">Certificações e Licenças</h1>
-        <p class="text-center text-slate-400 mb-16 max-w-2xl mx-auto">Operamos estritamente dentro da lei. A transparência e conformidade regulatória são a base da nossa prestação de serviços logísticos de saúde.</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="certs-grid">
-          <!-- Gerado via JS -->
+    <div id="page-certificacoes" class="page-section pt-10 pb-24 bg-dark text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Padrões de Qualidade</h1>
+          <p class="text-slate-400 text-lg max-w-2xl mx-auto">Operamos com transparência total e conformidade regulatória. Nossas licenças são o seu atestado de segurança.</p>
+        </div>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" id="certs-grid">
+          <!-- Renderizado via JS -->
         </div>
       </div>
     </div>
 
     <!-- PÁGINA: TRABALHE CONOSCO -->
-    <div id="page-carreiras" class="page-section">
-      <div class="pt-24 pb-20 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <i data-lucide="briefcase" class="w-10 h-10 text-blue-700"></i>
+    <div id="page-carreiras" class="page-section pt-10 pb-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in">
+        <div class="w-24 h-24 bg-brand-50 rounded-full flex items-center justify-center mx-auto mb-8 border border-brand-100">
+          <i data-lucide="briefcase" class="w-10 h-10 text-brand-600"></i>
         </div>
-        <h1 class="text-4xl font-bold text-slate-800 mb-6">Trabalhe Conosco</h1>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-dark mb-6">Faça parte do Time</h1>
         <p class="text-lg text-slate-600 mb-10 leading-relaxed">
-          Estamos sempre em busca de talentos apaixonados por logística, segurança e atendimento excepcional. Se você tem perfil analítico, trânsito seguro ou experiência em cadeia fria, queremos conhecê-lo.
+          Buscamos talentos apaixonados por logística, segurança e atendimento excepcional. Se você tem perfil analítico, trânsito seguro ou experiência em cadeia fria, junte-se a nós.
         </p>
-        <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl">
-          <h3 class="text-xl font-bold text-slate-800 mb-2">Envie seu currículo</h3>
-          <p class="text-slate-600 mb-6">Atualizamos nosso banco de talentos mensalmente.</p>
-          <a href="mailto:rh@logmaster.com.br" class="inline-flex items-center justify-center px-8 py-3 rounded-xl font-bold text-white bg-blue-700 hover:bg-blue-800 transition-colors">
-            <i data-lucide="mail" class="mr-2 w-5 h-5"></i> Enviar E-mail para RH
+        <div class="bg-white border border-slate-200 shadow-sm p-10 rounded-3xl">
+          <h3 class="text-2xl font-bold text-dark mb-2">Envie seu Currículo</h3>
+          <p class="text-slate-500 mb-8">Analisamos novas candidaturas mensalmente.</p>
+          <a href="mailto:rh@logmaster.com.br" class="inline-flex items-center justify-center px-8 py-4 rounded-xl font-bold text-white bg-dark hover:bg-slate-800 transition-colors shadow-lg">
+            <i data-lucide="mail" class="mr-3 w-5 h-5"></i> rh@logmaster.com.br
           </a>
         </div>
       </div>
     </div>
 
     <!-- PÁGINA: CONTATO -->
-    <div id="page-contato" class="page-section bg-slate-50 min-h-screen">
-      <div class="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16">
-        <div>
-          <h1 class="text-4xl font-bold text-slate-800 mb-6">Fale com um Especialista</h1>
-          <p class="text-lg text-slate-600 mb-10">Preencha o formulário e nossa equipe comercial entrará em contato em até 1 hora útil.</p>
-          <div class="space-y-6">
-            <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <div class="bg-blue-100 p-3 rounded-lg"><i data-lucide="phone" class="w-6 h-6 text-blue-700"></i></div>
-              <div><h4 class="font-bold text-slate-800">Telefone / Emergências</h4><p class="text-slate-600">0800 123 4567 (24h)</p></div>
-            </div>
-            <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <div class="bg-blue-100 p-3 rounded-lg"><i data-lucide="map-pin" class="w-6 h-6 text-blue-700"></i></div>
-              <div><h4 class="font-bold text-slate-800">Matriz Logística</h4><p class="text-slate-600">Belo Horizonte, MG</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 relative">
-          <div class="absolute top-4 right-4 flex items-center gap-2 text-xs font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">
-            <i data-lucide="lock" class="w-3 h-3"></i> Conexão Segura
-          </div>
-          <h3 class="text-2xl font-bold text-slate-800 mb-6">Solicitar Cotação</h3>
+    <div id="page-contato" class="page-section pt-10 pb-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-[3rem] shadow-xl border border-slate-100 overflow-hidden flex flex-col lg:flex-row" data-aos="fade-up">
           
-          <div id="form-success" class="hidden bg-green-50 border border-green-200 text-green-800 p-6 rounded-xl text-center">
-            <i data-lucide="check-circle-2" class="w-12 h-12 text-green-500 mx-auto mb-4"></i>
-            <h4 class="text-lg font-bold mb-2">Mensagem Enviada!</h4>
-            <p>Recebemos seus dados de forma segura. Retornaremos em breve.</p>
+          <!-- Coluna Infos -->
+          <div class="lg:w-2/5 bg-dark p-12 text-white flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-600/20 to-transparent"></div>
+            <div class="relative z-10">
+              <h2 class="text-4xl font-extrabold mb-4">Vamos Conversar?</h2>
+              <p class="text-slate-400 mb-12 text-lg">Nossa equipe comercial retornará o contato em até 60 minutos úteis.</p>
+              
+              <div class="space-y-8">
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-white/10 rounded-xl"><i data-lucide="phone" class="w-6 h-6 text-brand-400"></i></div>
+                  <div><h4 class="font-bold text-lg text-white">Central 24h</h4><p class="text-slate-400">0800 123 4567</p></div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-white/10 rounded-xl"><i data-lucide="mail" class="w-6 h-6 text-brand-400"></i></div>
+                  <div><h4 class="font-bold text-lg text-white">Comercial</h4><p class="text-slate-400">contato@logmaster.com.br</p></div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-white/10 rounded-xl"><i data-lucide="map-pin" class="w-6 h-6 text-brand-400"></i></div>
+                  <div><h4 class="font-bold text-lg text-white">Matriz Operacional</h4><p class="text-slate-400">Belo Horizonte, MG<br/>Brasil</p></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <form id="contactForm" class="space-y-5">
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1">Nome Completo *</label>
-              <input type="text" id="nome" required minlength="3" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Seu nome">
+          <!-- Coluna Form -->
+          <div class="lg:w-3/5 p-12 relative">
+            <div class="absolute top-8 right-12 flex items-center gap-2 text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+              <i data-lucide="lock" class="w-3 h-3"></i> Conexão Segura
             </div>
-            <div class="grid grid-cols-2 gap-4">
+            
+            <h3 class="text-2xl font-bold text-dark mb-8">Solicite uma Cotação</h3>
+            
+            <div id="form-success" class="hidden h-full flex-col items-center justify-center text-center animate-fadeRoute">
+              <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-6">
+                <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+              </div>
+              <h4 class="text-2xl font-bold text-dark mb-2">Tudo certo!</h4>
+              <p class="text-slate-600 text-lg">Seus dados foram enviados com criptografia. Retornaremos brevemente.</p>
+            </div>
+
+            <form id="contactForm" class="space-y-6">
               <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">E-mail Corporativo *</label>
-                <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="email@empresa.com">
+                <label class="block text-sm font-bold text-slate-700 mb-2">Nome Completo</label>
+                <input type="text" id="nome" required class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium text-dark placeholder:text-slate-400" placeholder="Como devemos lhe chamar?">
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 mb-2">E-mail Corporativo</label>
+                  <input type="email" id="email" required class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium text-dark placeholder:text-slate-400" placeholder="seu@email.com">
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-700 mb-2">Empresa</label>
+                  <input type="text" id="empresa" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium text-dark placeholder:text-slate-400" placeholder="Sua instituição">
+                </div>
               </div>
               <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">Empresa</label>
-                <input type="text" id="empresa" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Opcional">
+                <label class="block text-sm font-bold text-slate-700 mb-2">Detalhes da Demanda</label>
+                <textarea id="mensagem" required rows="4" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium text-dark resize-none placeholder:text-slate-400" placeholder="Tipo de carga, origem, destino e urgência..."></textarea>
               </div>
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1">Sua Demanda *</label>
-              <textarea id="mensagem" required minlength="10" rows="4" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Descreva o tipo de carga, origem e destino..."></textarea>
-            </div>
-            <button type="submit" id="submitBtn" class="w-full flex items-center justify-center py-4 px-4 border border-transparent rounded-xl shadow-sm text-base font-bold text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
-              <i data-lucide="send" class="w-5 h-5 mr-2"></i> Enviar Solicitação
-            </button>
-          </form>
+              <button type="submit" id="submitBtn" class="w-full flex items-center justify-center py-4 px-6 rounded-2xl shadow-lg shadow-brand-500/30 text-base font-bold text-white bg-brand-600 hover:bg-brand-700 focus:outline-none transition-all hover:-translate-y-0.5">
+                <i data-lucide="send" class="w-5 h-5 mr-2"></i> Enviar Solicitação
+              </button>
+            </form>
+          </div>
+
         </div>
       </div>
     </div>
@@ -362,148 +484,156 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-300 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div class="col-span-1 md:col-span-2">
-        <div class="flex items-center gap-2 mb-4">
-          <i data-lucide="shield-check" class="h-8 w-8 text-blue-500"></i>
-          <span class="font-bold text-2xl text-white tracking-tight">Log<span class="text-blue-500">Master</span></span>
+  <footer class="bg-dark text-slate-400 py-16 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div class="md:col-span-5">
+        <div class="flex items-center gap-2 mb-6">
+          <i data-lucide="shield-check" class="h-8 w-8 text-brand-500"></i>
+          <span class="font-extrabold text-2xl text-white tracking-tight">Log<span class="text-brand-500">Master</span></span>
         </div>
-        <p class="text-sm max-w-sm mb-6 leading-relaxed text-slate-400">
-          Soluções em logística segura e transporte de materiais biológicos sensíveis com excelência e rastreabilidade total a partir de MG para o Brasil.
+        <p class="text-sm leading-relaxed pr-8">
+          A referência nacional em logística de alta complexidade. Transportamos vida com engenharia de risco, tecnologia e controle térmico implacável.
         </p>
       </div>
-      <div>
-        <h3 class="text-white font-semibold mb-4">Navegação Rápida</h3>
-        <ul class="space-y-2 text-sm">
-          <li><button onclick="navigate('empresa')" class="hover:text-white transition-colors">A Empresa</button></li>
+      <div class="md:col-span-3">
+        <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Links Úteis</h3>
+        <ul class="space-y-3 text-sm font-medium">
+          <li><button onclick="navigate('empresa')" class="hover:text-white transition-colors">Quem Somos</button></li>
           <li><button onclick="navigate('servicos')" class="hover:text-white transition-colors">Nossos Serviços</button></li>
           <li><button onclick="navigate('certificacoes')" class="hover:text-white transition-colors">Certificações</button></li>
+          <li><button onclick="navigate('carreiras')" class="hover:text-white transition-colors">Trabalhe Conosco</button></li>
         </ul>
       </div>
-      <div>
-        <h3 class="text-white font-semibold mb-4">Contato</h3>
-        <ul class="space-y-3 text-sm">
-          <li class="flex items-center gap-2"><i data-lucide="map-pin" class="h-4 w-4 text-blue-500"></i> Belo Horizonte - MG</li>
-          <li class="flex items-center gap-2"><i data-lucide="phone" class="h-4 w-4 text-blue-500"></i> 0800 123 4567</li>
-          <li class="flex items-center gap-2"><i data-lucide="mail" class="h-4 w-4 text-blue-500"></i> contato@logmaster.com.br</li>
+      <div class="md:col-span-4">
+        <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Contato</h3>
+        <ul class="space-y-4 text-sm font-medium">
+          <li class="flex items-start gap-3"><i data-lucide="map-pin" class="h-5 w-5 text-brand-500 shrink-0"></i> Belo Horizonte - Minas Gerais</li>
+          <li class="flex items-center gap-3"><i data-lucide="phone" class="h-5 w-5 text-brand-500 shrink-0"></i> 0800 123 4567</li>
+          <li class="flex items-center gap-3"><i data-lucide="mail" class="h-5 w-5 text-brand-500 shrink-0"></i> contato@logmaster.com.br</li>
         </ul>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-sm text-center text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p>&copy; <span id="year"></span> Log Master. CNPJ: 00.000.000/0001-00.</p>
-      <div class="flex gap-4">
-        <a href="#" class="hover:text-white">Privacidade</a>
-        <a href="#" class="hover:text-white">Termos de Uso</a>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-slate-800 text-sm flex flex-col md:flex-row justify-between items-center gap-4 font-medium">
+      <p>&copy; <span id="year"></span> Log Master Soluções em Logística.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white transition-colors">Política de Privacidade</a>
+        <a href="#" class="hover:text-white transition-colors">Termos de Serviço</a>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS EXTERNOS -->
+  <!-- AOS Animation Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Typed.js Script -->
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+  <!-- LÓGICA DO APP -->
   <script>
-    // Inicializar ícones
+    // 1. Inicializar Ícones
     lucide.createIcons();
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Renderizar Certificações
-    const certs = ['ANVISA (AFE e AE)', 'ANTT (RNTRC Ativo)', 'IBAMA (Cargas Perigosas)', 'Polícia Federal', 'Polícia Civil', 'CRF (Farmacêutico RT)', 'CVS / Vigilância Local', 'ISO 9001 (Em andamento)'];
+    // 2. Animação de Digitação (Hero)
+    new Typed('#typed-text', {
+      strings: ['Materiais Biológicos', 'Fármacos Sensíveis', 'Vacinas', 'Hemoderivados', 'Cargas Críticas (AOG)'],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 2000,
+      loop: true,
+      showCursor: true,
+      cursorChar: '|'
+    });
+
+    // 3. Renderizar Certificações
+    const certs = [
+      { name: 'ANVISA', desc: 'AFE e AE Ativas' }, { name: 'ANTT', desc: 'RNTRC Regularizado' },
+      { name: 'IBAMA', desc: 'Cargas Perigosas' }, { name: 'Polícia Federal', desc: 'Produtos Controlados' },
+      { name: 'Polícia Civil', desc: 'Alvará Estadual' }, { name: 'CRF', desc: 'Farmacêutico RT' },
+      { name: 'CVS', desc: 'Vigilância Sanitária' }, { name: 'ISO 9001', desc: 'Gestão da Qualidade' }
+    ];
     const certsGrid = document.getElementById('certs-grid');
-    certs.forEach(cert => {
+    certs.forEach((cert, i) => {
       certsGrid.innerHTML += `
-        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-slate-700 transition-colors">
-          <i data-lucide="file-check-2" class="w-10 h-10 text-blue-400 mb-4"></i>
-          <span class="font-semibold text-slate-200">${cert}</span>
+        <div data-aos="fade-up" data-aos-delay="${i * 50}" class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-slate-700 hover:border-brand-500/50 transition-all group">
+          <i data-lucide="shield-check" class="w-8 h-8 text-brand-400 mb-3 group-hover:scale-110 transition-transform"></i>
+          <span class="font-bold text-white text-lg">${cert.name}</span>
+          <span class="text-slate-400 text-xs mt-1 font-medium tracking-wide uppercase">${cert.desc}</span>
         </div>`;
     });
-    lucide.createIcons(); // Recriar para os novos ícones gerados
+    lucide.createIcons();
 
-    // Lógica de Roteamento SPA Vanilla
+    // 4. Inicializar Scroll Animations (AOS)
+    AOS.init({
+      once: true, // Anima apenas na primeira vez que rola
+      offset: 50, // Dispara a animação um pouco antes
+    });
+
+    // 5. Roteamento SPA Vanilla
     function navigate(pageId) {
-      // Esconder todas as páginas
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-      // Mostrar a página alvo
       document.getElementById('page-' + pageId).classList.add('active');
       
-      // Atualizar estado ativo na Navbar Desktop e Mobile
-      document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(el => {
+      // Atualizar Links Ativos
+      document.querySelectorAll('.nav-link').forEach(el => {
         if (el.dataset.target === pageId) {
-          el.classList.add('bg-blue-50', 'text-blue-700');
-          el.classList.remove('text-slate-600', 'text-slate-700');
+          el.classList.add('text-brand-600');
+          el.querySelector('span')?.classList.replace('scale-x-0', 'scale-x-100');
         } else {
-          el.classList.remove('bg-blue-50', 'text-blue-700');
-          if (el.classList.contains('nav-link')) el.classList.add('text-slate-600');
-          if (el.classList.contains('mobile-nav-link')) el.classList.add('text-slate-700');
+          el.classList.remove('text-brand-600');
+          el.querySelector('span')?.classList.replace('scale-x-100', 'scale-x-0');
         }
       });
 
-      // Fechar menu mobile se estiver aberto e scrollar pro topo
+      // Fechar menu mobile e rolar topo
       document.getElementById('mobile-menu').classList.add('hidden');
-      document.getElementById('menu-icon').setAttribute('data-lucide', 'menu');
-      lucide.createIcons();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Atualiza o AOS para os novos elementos exibidos
+      setTimeout(() => AOS.refresh(), 100);
     }
 
-    // Menu Mobile Toggle
+    // 6. Menu Mobile Toggle
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
-      const icon = document.getElementById('menu-icon');
-      if (menu.classList.contains('hidden')) {
-        menu.classList.remove('hidden');
-        icon.setAttribute('data-lucide', 'x');
-      } else {
-        menu.classList.add('hidden');
-        icon.setAttribute('data-lucide', 'menu');
-      }
-      lucide.createIcons();
+      menu.classList.toggle('hidden');
     }
 
-    // Scroll Navbar Effect
+    // 7. Efeito Glassmorphism da Navbar no Scroll
     window.addEventListener('scroll', () => {
       const header = document.getElementById('navbar');
       if (window.scrollY > 20) {
-        header.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-2');
-        header.classList.remove('bg-white', 'py-4');
+        header.classList.replace('py-5', 'py-2');
       } else {
-        header.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-2');
-        header.classList.add('bg-white', 'py-4');
+        header.classList.replace('py-2', 'py-5');
       }
     });
 
-    // Form Submit Simulation
+    // 8. Simulação de Formulário Seguro
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.innerHTML = 'Enviando Seguro...';
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="lucide-loader animate-spin w-5 h-5 mr-2"></i> Criptografando...';
       btn.disabled = true;
-      btn.classList.add('opacity-70');
+      btn.classList.add('opacity-80');
       
       setTimeout(() => {
         document.getElementById('contactForm').classList.add('hidden');
-        document.getElementById('form-success').classList.remove('hidden');
-        btn.innerHTML = '<i data-lucide="send" class="w-5 h-5 mr-2"></i> Enviar Solicitação';
-        btn.disabled = false;
-        btn.classList.remove('opacity-70');
-        this.reset();
+        document.getElementById('form-success').classList.replace('hidden', 'flex');
         
         setTimeout(() => {
           document.getElementById('contactForm').classList.remove('hidden');
-          document.getElementById('form-success').classList.add('hidden');
-        }, 5000);
+          document.getElementById('form-success').classList.replace('flex', 'hidden');
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          btn.classList.remove('opacity-80');
+          this.reset();
+        }, 6000);
       }, 1500);
     });
 
-    // Intersection Observer para animações no scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
-
-    // Define a Home como ativa na primeira carga
+    // Iniciar na Home
     navigate('home');
   </script>
 </body>
